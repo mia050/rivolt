@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>The Rivolt Practice · MIA Technology</title>
+<meta property="og:title" content="The Rivolt Practice">
+<meta property="og:description" content="Every client on the fairway. Every return on par.">
+<meta property="og:image" content="https://mia050.github.io/rivolt/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cardo:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;min-width:0}html,body{margin:0;height:100%;background:#0c1330}body{overflow:hidden;font:16px/1.5 Inter,system-ui,sans-serif}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#070b1f;color:#f1e3bd;padding:12px 18px;border-radius:10px;z-index:90;font-weight:600;display:none;max-width:92vw}.toast.open{display:block}
+/* ---------- meeting brief, viewer, presentation ---------- */
+.he{direction:rtl;text-align:right;font-family:Manrope,'Segoe UI','Arial Hebrew','Noto Sans Hebrew',Arial,sans-serif}
+.he .ltr{direction:ltr;text-align:left;unicode-bidi:isolate}
+.meethero{background:#0c1330;color:#f3efe6;border:0;border-radius:16px;padding:24px;display:grid;gap:10px}
+.meethero h2{font-family:Cardo,Georgia,serif;font-weight:400;font-size:clamp(26px,3.4vw,38px);color:#e2ad4c;margin:0}
+.meethero p{margin:0;color:#d9d4c7}.meethero .count{font-weight:700;color:#fff}
+.toggle{display:flex;gap:10px;align-items:center;cursor:pointer;padding:8px 0}
+.toggle input{width:20px;height:20px;accent-color:#b58d2c}
+.demogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.democard{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.democard .top{padding:20px;color:#f3efe6;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end}
+.democard .top b{font-size:20px;font-family:Cardo,Georgia,serif;font-weight:400}.democard .top small{opacity:.8}
+.democard .body{padding:14px 16px;display:grid;gap:10px}
+#viewer{position:fixed;inset:0;z-index:55;background:#000;display:none;flex-direction:column}
+#viewer.open{display:flex}
+#viewer .vbar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 12px;background:#0b0b0d;color:#ecebe6;font-size:14px}
+#viewer .vbar a,#viewer .vbar button{color:#e3c172;background:#1b1b20;border:1px solid #2c2c33;border-radius:8px;padding:7px 12px;text-decoration:none;cursor:pointer;font-weight:600;font-size:13px}
+#viewer iframe{flex:1;border:0;width:100%;background:#fff}
+#present{position:fixed;inset:0;z-index:70;display:none;background:#0c1330;color:#f3efe6;font:16px/1.5 Inter,system-ui,sans-serif}
+#present.open{display:block}
+#present .ps{position:absolute;inset:0;display:none;overflow:auto;padding:clamp(28px,5vw,80px) clamp(22px,6vw,96px) 84px}
+#present .ps.on{display:flex;flex-direction:column}
+#present .pin{margin:auto 0;width:100%;position:relative;display:flex;flex-direction:column}
+#present .dark{background:#0c1330;color:#f3efe6}
+#present .light{background:#f6f1e6;color:#0c1330}
+#present h1,#present h2{font-family:Cardo,Georgia,serif;font-weight:400;margin:0;line-height:1.04;text-wrap:balance}
+#present h1{font-size:clamp(46px,7.4vw,104px)}
+#present h2{font-size:clamp(32px,4.6vw,60px)}
+#present h2 em,#present .tag{font-style:italic;color:#b7832a}
+#present .dark h2 em,#present .dark .tag{color:#e2ad4c}
+#present .tag{font-family:Cardo,Georgia,serif;font-size:clamp(20px,2.4vw,30px);margin:18px 0 0}
+#present .kick,#present .eyebrow{font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;color:#b7832a;font-weight:600;margin-bottom:16px}
+#present .dark .eyebrow{color:#a9a79e}
+#present .meta{color:#c9c4b6;margin-top:28px;font-size:17px}
+#present .pfoot{position:absolute;left:clamp(22px,6vw,96px);right:clamp(22px,6vw,96px);bottom:22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;letter-spacing:.18em;color:#8f8c84;text-transform:uppercase}
+#present .contour{position:absolute;right:-6vw;top:-14vh;width:min(70vw,900px);height:auto;opacity:.95;pointer-events:none}
+#present .holes{list-style:none;padding:0;margin:30px 0 0;display:grid;gap:0;max-width:960px}
+#present .holes button{all:unset;cursor:pointer;display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:16px 0;border-bottom:1px solid #d8cfbb;width:100%;font-size:clamp(17px,1.9vw,22px)}
+#present .holes button b{font-family:Cardo,Georgia,serif;font-weight:400;color:#b7832a;font-size:30px}
+#present .holes button i{font-style:normal;font-size:13px;color:#8a7f69;letter-spacing:.06em}
+#present .holes button:hover span{color:#b7832a}
+#present .pgo{margin-top:30px;align-self:flex-start;background:#0c1330;color:#f3efe6;border:0;border-radius:10px;padding:14px 24px;font:600 16px Inter,system-ui,sans-serif;cursor:pointer}
+#present .note{color:#6f6656;font-family:Cardo,Georgia,serif;font-style:italic;font-size:18px;margin-top:18px}
+#present .demo{padding:0;background:#0c1330}
+#present .demo.on{display:block}
+#pframe{position:absolute;left:0;right:0;top:0;bottom:58px}
+#pframe iframe{width:100%;height:100%;border:0;background:#0c1330}
+#present .prail{position:absolute;left:0;right:0;bottom:0;height:58px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#070b1f;border-top:1px solid #1d2547}
+#present .prail .chips{display:flex;gap:6px;overflow-x:auto;flex:1;scrollbar-width:none}
+#present .prail button{flex:none;background:#121a3a;color:#d9d4c7;border:1px solid #24305c;border-radius:99px;padding:7px 12px;font:500 13px Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+#present .prail button b{color:#e2ad4c;margin-right:4px}
+#present .prail button.on{background:#e2ad4c;color:#0c1330;border-color:#e2ad4c}#present .prail button.on b{color:#0c1330}
+#present .prail .end{background:transparent;border-color:#3a4570}
+#pfallback{position:absolute;inset:0 0 58px 0;display:flex;align-items:center;justify-content:center;background:#0c1330;text-align:center;padding:30px}
+#pfallback[hidden]{display:none}
+#pfallback a{display:inline-block;margin:8px;background:#e2ad4c;color:#0c1330;border-radius:10px;padding:12px 18px;font-weight:700;text-decoration:none}
+#pfallback a.sec{background:transparent;color:#e2ad4c;border:1px solid #e2ad4c}
+#present .gantt{margin:26px 0 8px;max-width:1080px;display:grid;gap:10px}
+#present .grow{display:grid;grid-template-columns:240px minmax(0,1fr);gap:16px;align-items:center}
+#present .grow .n{font-family:Cardo,Georgia,serif;font-size:21px}#present .grow .n small{display:block;font:600 11px Inter,sans-serif;letter-spacing:.16em;color:#8a7f69;text-transform:uppercase}
+#present .track{position:relative;height:40px;border-bottom:1px solid #e0d6c2}
+#present .track span{position:absolute;top:6px;height:16px;border-radius:9px;background:#0c1330}
+#present .track em{position:absolute;top:25px;text-align:right;font:600 10.5px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b7832a;font-style:normal;white-space:nowrap}
+#present .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1080px;margin-top:18px}
+#present .two div{background:#fffdf8;border:1px solid #e4dac6;border-radius:12px;padding:16px 20px}
+#present .two h4,#present .terms h4{margin:0 0 8px;font:600 12px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#b7832a}
+#present .two ul,#present .terms ul{margin:0;padding-left:18px}#present .two li,#present .terms li{margin:4px 0}
+#present .callout{max-width:1080px;background:#f3e6c6;border-radius:12px;padding:14px 20px;margin-top:16px}
+#present .lede{font-size:clamp(17px,1.7vw,20px);max-width:820px;color:#3a3f57;margin:14px 0 0}
+#present .steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:1080px;margin-top:26px}
+#present .steps3 div{background:#fffdf8;border:1px solid #e4dac6;border-radius:12px;padding:18px 20px}
+#present .steps3 i{font-family:Cardo,Georgia,serif;font-style:normal;font-size:30px;color:#b7832a}
+#present .steps3 h4{font-family:Cardo,Georgia,serif;font-weight:400;font-size:24px;margin:4px 0 6px}
+#present .steps3 p{margin:0;color:#3a3f57}
+#present .steps3 .done{background:#0c1330;color:#f3efe6;border-color:#0c1330}#present .steps3 .done p{color:#cfc9ba}#present .steps3 .done i{color:#e2ad4c}
+#present .terms{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;max-width:1080px;margin-top:18px}
+#present .terms>div{background:#fffdf8;border:1px solid #e4dac6;border-radius:12px;padding:16px 20px}
+#present .plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+#present .plans button{all:unset;cursor:pointer;border:1px solid #e0d6c2;border-radius:10px;padding:10px;display:grid;gap:2px;font-size:13px;color:#3a3f57}
+#present .plans button b{font-family:Cardo,Georgia,serif;font-weight:400;font-size:19px;color:#0c1330}
+#present .plans button strong{font-size:16px;color:#0c1330;margin-top:4px;white-space:nowrap}
+#present .plans button.on{border:2px solid #b7832a;background:#fbf3df}
+#present .qrs{display:flex;gap:28px;flex-wrap:wrap;margin-top:34px}
+#present figure{margin:0;display:flex;gap:16px;align-items:center}
+#present figure svg{width:132px;height:132px;background:#fff;border-radius:10px;padding:8px}
+#present figcaption b{display:block;font-family:Cardo,Georgia,serif;font-weight:400;font-size:24px;color:#f3efe6}
+#present figcaption span{display:block;color:#c9c4b6;font-size:14px}#present figcaption small{display:block;color:#8f8c84;font-size:12px;margin-top:4px}
+#present .pctl{position:absolute;right:56px;top:12px;display:flex;gap:6px;z-index:5}
+#present .pctl button,#present .pexit{background:rgba(127,127,127,.14);border:1px solid rgba(127,127,127,.28);color:inherit;border-radius:8px;min-width:38px;height:34px;cursor:pointer;font-size:15px;opacity:.55}
+#present .pexit{position:absolute;top:12px;right:12px;z-index:6;opacity:.45}
+#present .pexit:hover,#present .pctl button:hover{opacity:1}
+#present .ps.demo~.pctl{display:none}
+#pconfirm{position:absolute;inset:0;background:rgba(5,8,20,.72);display:none;align-items:center;justify-content:center;z-index:9}
+#pconfirm.open{display:flex}
+#pconfirm div{background:#fffdf8;color:#0c1330;border-radius:14px;padding:22px;max-width:380px;display:grid;gap:12px}
+#pconfirm button{border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer;border:1px solid #0c1330;background:#fff}
+#pconfirm button.y{background:#0c1330;color:#fff}
+@media(max-width:800px){#present .pfoot{position:static;margin-top:28px}#present .pctl{right:52px}#present .two,#present .steps3,#present .terms{grid-template-columns:minmax(0,1fr)}#present .plans{grid-template-columns:repeat(2,minmax(0,1fr))}#present .grow{grid-template-columns:110px minmax(0,1fr)}#present .grow .n{font-size:16px}#present .track em{display:none}#present .contour{opacity:.35;width:110vw;right:-30vw}#present .holes button{grid-template-columns:40px minmax(0,1fr)}#present .holes button i{display:none}}
+
+#present .pexit,#pconfirm{display:none!important}
+#present .pctl{right:14px}
+</style>
+</head>
+<body>
+<div id="viewer" hidden></div>
+<div id="present" class="open" role="main" aria-label="The Rivolt Practice"></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+{
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const K=n=>'K'+Math.abs(Math.round(n||0)).toLocaleString('en-US');
+const Q=new URLSearchParams(location.search);
+const S={plans:[{id:'essential',name:'Essential',min:1,max:10,setup:30000,monthly:3000},{id:'growth',name:'Growth',min:11,max:20,setup:40000,monthly:4500},{id:'professional',name:'Professional',min:21,max:35,setup:55000,monthly:6500},{id:'premier',name:'Premier',min:36,max:50,setup:70000,monthly:8500}],meet:{showPrices:Q.get('prices')==='1',plan:Q.get('plan')||'essential',partnerPct:(Q.get('pct')||'').replace(/[^0-9.]/g,'').slice(0,5)}};
+const save=()=>{},closeAll=()=>{},render=()=>{};
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('open');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('open'),3500)}
+/* ---------- presentation (client-facing) ---------- */
+const QR={"q": {"n": 29, "d": "M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM12 0h1v1h-1zM13 0h1v1h-1zM16 0h1v1h-1zM17 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM25 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM14 1h1v1h-1zM15 1h1v1h-1zM16 1h1v1h-1zM17 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM18 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM19 4h1v1h-1zM20 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM18 5h1v1h-1zM19 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM25 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM9 7h1v1h-1zM10 7h1v1h-1zM12 7h1v1h-1zM13 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM17 7h1v1h-1zM18 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM17 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM24 8h1v1h-1zM27 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM5 9h1v1h-1zM9 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM20 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM25 9h1v1h-1zM28 9h1v1h-1zM1 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM17 10h1v1h-1zM21 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM28 10h1v1h-1zM1 11h1v1h-1zM2 11h1v1h-1zM5 11h1v1h-1zM12 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM23 11h1v1h-1zM27 11h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM25 12h1v1h-1zM27 12h1v1h-1zM28 12h1v1h-1zM0 13h1v1h-1zM1 13h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM13 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM17 13h1v1h-1zM18 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM25 13h1v1h-1zM28 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM28 14h1v1h-1zM0 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM8 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM19 15h1v1h-1zM21 15h1v1h-1zM23 15h1v1h-1zM25 15h1v1h-1zM27 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM25 16h1v1h-1zM27 16h1v1h-1zM28 16h1v1h-1zM1 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM5 17h1v1h-1zM7 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM20 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM25 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM7 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM12 18h1v1h-1zM13 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM27 18h1v1h-1zM28 18h1v1h-1zM1 19h1v1h-1zM2 19h1v1h-1zM4 19h1v1h-1zM5 19h1v1h-1zM7 19h1v1h-1zM8 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM21 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM8 21h1v1h-1zM9 21h1v1h-1zM10 21h1v1h-1zM11 21h1v1h-1zM12 21h1v1h-1zM13 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM24 21h1v1h-1zM26 21h1v1h-1zM27 21h1v1h-1zM28 21h1v1h-1zM0 22h1v1h-1zM1 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM9 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM17 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM27 22h1v1h-1zM28 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM13 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM25 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM14 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM28 24h1v1h-1zM0 25h1v1h-1zM2 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM9 25h1v1h-1zM10 25h1v1h-1zM11 25h1v1h-1zM12 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM23 25h1v1h-1zM24 25h1v1h-1zM26 25h1v1h-1zM27 25h1v1h-1zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM9 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM14 26h1v1h-1zM16 26h1v1h-1zM17 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM13 27h1v1h-1zM15 27h1v1h-1zM16 27h1v1h-1zM17 27h1v1h-1zM18 27h1v1h-1zM19 27h1v1h-1zM20 27h1v1h-1zM27 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM9 28h1v1h-1zM10 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM16 28h1v1h-1zM17 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM23 28h1v1h-1zM27 28h1v1h-1zM28 28h1v1h-1z", "u": "https://mia050.github.io/rivolt/"}, "d": {"n": 29, "d": "M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM17 0h1v1h-1zM18 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM25 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM19 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM19 2h1v1h-1zM20 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM9 3h1v1h-1zM11 3h1v1h-1zM12 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM16 5h1v1h-1zM17 5h1v1h-1zM19 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM25 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM8 7h1v1h-1zM9 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM18 7h1v1h-1zM19 7h1v1h-1zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM12 8h1v1h-1zM13 8h1v1h-1zM15 8h1v1h-1zM17 8h1v1h-1zM18 8h1v1h-1zM19 8h1v1h-1zM20 8h1v1h-1zM21 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM25 8h1v1h-1zM28 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM7 9h1v1h-1zM9 9h1v1h-1zM10 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM24 9h1v1h-1zM25 9h1v1h-1zM26 9h1v1h-1zM27 9h1v1h-1zM28 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM11 10h1v1h-1zM15 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM23 10h1v1h-1zM28 10h1v1h-1zM0 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM4 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM11 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM23 12h1v1h-1zM27 12h1v1h-1zM1 13h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM28 13h1v1h-1zM2 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM10 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM25 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM8 15h1v1h-1zM9 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM15 15h1v1h-1zM17 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM27 15h1v1h-1zM28 15h1v1h-1zM0 16h1v1h-1zM1 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM13 16h1v1h-1zM17 16h1v1h-1zM20 16h1v1h-1zM27 16h1v1h-1zM0 17h1v1h-1zM4 17h1v1h-1zM7 17h1v1h-1zM9 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM25 17h1v1h-1zM27 17h1v1h-1zM28 17h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM10 18h1v1h-1zM15 18h1v1h-1zM17 18h1v1h-1zM26 18h1v1h-1zM28 18h1v1h-1zM3 19h1v1h-1zM4 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM20 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM27 19h1v1h-1zM28 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM25 20h1v1h-1zM28 20h1v1h-1zM8 21h1v1h-1zM9 21h1v1h-1zM11 21h1v1h-1zM12 21h1v1h-1zM15 21h1v1h-1zM20 21h1v1h-1zM24 21h1v1h-1zM28 21h1v1h-1zM0 22h1v1h-1zM1 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM15 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM28 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM13 23h1v1h-1zM15 23h1v1h-1zM17 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM13 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM25 24h1v1h-1zM27 24h1v1h-1zM0 25h1v1h-1zM2 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM9 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM15 25h1v1h-1zM16 25h1v1h-1zM17 25h1v1h-1zM18 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM9 26h1v1h-1zM13 26h1v1h-1zM15 26h1v1h-1zM16 26h1v1h-1zM18 26h1v1h-1zM20 26h1v1h-1zM21 26h1v1h-1zM25 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM15 27h1v1h-1zM17 27h1v1h-1zM18 27h1v1h-1zM20 27h1v1h-1zM22 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM28 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM9 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM17 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM22 28h1v1h-1zM23 28h1v1h-1zM25 28h1v1h-1zM27 28h1v1h-1z", "u": "https://mia050.github.io/rivolt/demo/"}};
+const SCENES=[['Monday on the scorecard','Scorecard'],['Ask Rivolt','Ask Rivolt'],['A VAT month, one hole','VAT month'],['Three months, traced live','Traced live'],['A ZRA letter, read and answered','ZRA letter'],['A new client in one sitting','New client'],['The caddies at work','Caddies'],['My Rivolt and a QR','My Rivolt'],['The money and the new line','The new line']];
+const HOLES=[[0,"Monday morning on the partner's scorecard, client by client"],[2,'A VAT month, from a WhatsApp photo to an approved, filed return'],[3,'Three months of bank statements, traced live'],[7,'My Rivolt on a phone, and a QR verified'],[6,'The caddies at work, and the button that pauses them']];
+const PHASES=[['0','Discovery',1,2,'Proposal signed'],['I','Core',3,8,'Pilot with 10 clients'],['II','Compliance',9,14,'A full month, no spreadsheet'],['III','Forensic and agents',12,18,'Every agent passes its tests'],['IV','Advanced',16,20,'Partner sign-off']];
+const SL=['cover','agenda','demo','build','terms','close'];
+const PR={i:0,frame:null,ready:false,scene:-1,timer:null,built:false};
+function contours(){let o='';for(let k=1;k<=15;k++){const r=k*19;let d='';for(let a=0;a<=64;a++){const t=a/64*Math.PI*2,rr=r*(1+0.13*Math.sin(3*t+k*0.45)+0.07*Math.sin(5*t+1.3+k*0.2));d+=(a?'L':'M')+(rr*Math.cos(t)).toFixed(1)+' '+(rr*0.82*Math.sin(t)).toFixed(1)}o+=`<path d="${d}Z" fill="none" stroke="#c8963c" stroke-opacity="${(0.85-k*0.045).toFixed(2)}" stroke-width="1.4"/>`}return o}
+const qrSvg=k=>`<svg viewBox="-1 -1 ${QR[k].n+2} ${QR[k].n+2}" role="img" aria-label="QR code"><path d="${QR[k].d}" fill="#0c1330"/></svg>`;
+function termsHTML(){const m=S.meet,pct=String(m.partnerPct||'').trim();
+ return `<div><h4>How the price works</h4><p style="margin:0">One setup fee and one monthly fee, set by how many of your people log in. Every plan has every feature. Your clients use My Rivolt at no user charge.</p>
+ ${m.showPrices?`<div class="plans">${S.plans.map(pl=>`<button class="${m.plan===pl.id?'on':''}" data-pact="plan" data-v="${pl.id}"><b>${pl.name}</b><span>${pl.min===1?'Up to '+pl.max:pl.min+' to '+pl.max} users</span><strong>${K(pl.setup)}</strong><span>setup, once</span><span>${K(pl.monthly)} a month</span></button>`).join('')}</div>`:''}
+ <ul style="margin-top:12px"><li>Setup fee: 50% on signing, 50% at go-live</li><li>Monthly fee from go-live, invoiced monthly in advance</li><li>Zambian Kwacha, excluding VAT where it applies</li><li>Hosting, WhatsApp messages and AI usage passed on at cost, with no mark-up</li><li>Rivolt's data belongs to Rivolt, and can be exported at any time</li></ul></div>
+ <div><h4>Partner option · the client workflow line</h4><p style="margin:0">Rivolt designs the workflow and stays the adviser. MIA builds and runs it as an app in the client's name.</p><p style="margin:10px 0 0"><b>${pct?`For every client system Rivolt brings, Rivolt receives ${esc(pct)}%, as a commission or as a discount on its own fees.`:'For every client system Rivolt brings, Rivolt receives a commission or a discount on its own fees. We agree the percentage together.'}</b></p></div>`}
+function renderTerms(){const t=document.getElementById('pterms');if(t)t.innerHTML=termsHTML()}
+function slidesHTML(){return `
+ <section class="ps dark" data-s="cover"><svg class="contour" viewBox="-320 -300 640 560" aria-hidden="true">${contours()}<g transform="translate(6,-8)"><path d="M0 0V-46" stroke="#e2ad4c" stroke-width="2.4"/><path d="M0 -46L30 -37L0 -28Z" fill="#e2ad4c"/><circle cx="0" cy="0" r="4" fill="none" stroke="#e2ad4c" stroke-width="2"/></g></svg>
+  <div class="pin" style="max-width:900px"><div class="eyebrow">Rivolt Chartered Accountants · Woodlands, Lusaka</div><h1>The Rivolt Practice</h1><p class="tag">Every client on the fairway. Every return on par.</p><p class="meta">A live demonstration for Mr Amukusana Mulonda, Managing Partner<br>Tuesday, 24 November 2026</p></div>
+  <div class="pfoot"><span>Audit · Tax · Business advisory</span><span>Presented by Moshe Israel Ashtamkar · MIA Technology</span></div></section>
+ <section class="ps light" data-s="agenda"><div class="pin"><div class="kick">Today's round</div><h2>Forty-five minutes, <em>five holes</em></h2>
+  <div class="holes">${HOLES.map((h,i)=>`<button data-pact="hole" data-v="${h[0]}"><b>${i+1}</b><span>${esc(h[1])}</span><i>Play ›</i></button>`).join('')}</div>
+  <p class="note">Played as it lies. Recorded as it happened. Every name and figure on screen is sample data.</p>
+  <button class="pgo" data-pact="next">Tee off ›</button></div></section>
+ <section class="ps demo" data-s="demo"><div id="pframe"></div><div id="pfallback" hidden><div><p style="font-family:Cardo,Georgia,serif;font-size:26px;margin:0 0 8px">The demonstration is ready to open</p><a href="demos/rivolt/index.html" target="_self">Open it full screen</a><a class="sec" href="https://mia050.github.io/rivolt/demo/" target="_blank" rel="noopener">Open the online copy</a></div></div>
+  <div class="prail"><button class="end" data-pact="prev">‹ Round</button><div class="chips">${SCENES.map((x,i)=>`<button data-pact="scene" data-v="${i}" title="${esc(x[0])}"><b>${i+1}</b>${esc(x[1])}</button>`).join('')}</div><button class="end" data-pact="next">Next ›</button></div></section>
+ <section class="ps light" data-s="build"><div class="pin"><div class="kick">The blueprint</div><h2>How we build it <em>together</em></h2><p class="lede">Five phases, each closed by a gate your partners approve. The firm keeps working as usual while we build in the background.</p>
+  <div class="gantt">${PHASES.map(ph=>`<div class="grow"><div class="n">${ph[0]} ${esc(ph[1])}<small>Weeks ${ph[2]} – ${ph[3]}</small></div><div class="track"><span style="left:${(ph[2]-1)/20*100}%;width:${(ph[3]-ph[2]+1)/20*100}%"></span><em style="right:${(20-ph[3])/20*100}%">◆ Gate · ${esc(ph[4])}</em></div></div>`).join('')}</div>
+  <div class="two"><div><h4>What we need from your firm</h4><ul><li>One partner to sponsor the project</li><li>A day with your team during discovery</li><li>Your client list and their registrations</li><li>Ten clients who agree to pilot My Rivolt</li><li>Two closed forensic files to test the Tracer</li></ul></div><div><h4>What you receive at each gate</h4><ul><li>A working phase, tested with your people</li><li>Training for every role it touches</li><li>A short report against the five measures</li><li>Your approval before the next phase starts</li></ul></div></div>
+  <p class="callout"><b>Before 31 March.</b> We propose to start discovery in December, so the core is live for the 31 March provisional returns, and compliance and the agents are in place for the 21 June annual returns season. Weeks are estimates, fixed at the end of discovery.</p></div></section>
+ <section class="ps light" data-s="terms"><div class="pin"><div class="kick">The 19th hole</div><h2>Three steps <em>from here</em></h2>
+  <div class="steps3"><div class="done"><i>I</i><h4>See it live</h4><p>Today, on screen, in Rivolt's colours, with a sample firm running through a real month.</p></div><div><i>II</i><h4>Discovery</h4><p>Two weeks with your team to map clients, people and workflow. You receive a fixed scope, a fixed price and a dated plan.</p></div><div><i>III</i><h4>Terms</h4><p>Set out below, including a partner option for the client workflow line.</p></div></div>
+  <div class="terms" id="pterms"></div></div></section>
+ <section class="ps dark" data-s="close"><svg class="contour" viewBox="-320 -300 640 560" aria-hidden="true" style="opacity:.35">${contours()}</svg>
+  <div class="pin" style="max-width:980px"><div class="eyebrow">The next tee</div><h2>Shall we tee off <em>in December?</em></h2><p class="lede" style="color:#d9d4c7">Two weeks of discovery with your team: a fixed scope, a fixed price and a dated plan, so the core is live before the 31 March provisional returns.</p>
+  <div class="qrs"><figure>${qrSvg('q')}<figcaption><b>Your yardage book</b><span>Nine short holes, about 8 minutes</span><small>${QR.q.u.replace('https://','')}</small></figcaption></figure><figure>${qrSvg('d')}<figcaption><b>Play it yourself</b><span>The same demonstration, with sample data</span><small>${QR.d.u.replace('https://','')}</small></figcaption></figure></div></div>
+  <div class="pfoot"><span>Moshe Israel Ashtamkar · MIA Technology</span><span>M.I.A Technology and Financial Solutions Limited · Lusaka</span></div></section>
+ <button class="pexit" data-pact="exit" aria-label="Leave the presentation">×</button>
+ <div class="pctl"><button data-pact="prev" aria-label="Previous">‹</button><button data-pact="next" aria-label="Next">›</button><button data-pact="fs" aria-label="Full screen">⤢</button></div>
+ <div id="pconfirm"><div><b>Leave the presentation?</b><span>The internal HQ screens will show next.</span><div class="row"><button class="y" data-pact="leave">Leave</button><button data-pact="stay">Stay</button></div></div></div>`}
+function presentOpen(i){const el=document.getElementById('present');if(!PR.built){el.innerHTML=slidesHTML();PR.built=true}renderTerms();el.classList.add('open');document.body.style.overflow='hidden';closeAll();ensureFrame();showSlide(i||0)}
+function ensureFrame(){if(PR.frame)return;const f=document.createElement('iframe');f.src='demos/rivolt/index.html';f.title='Rivolt Practice demonstration';f.setAttribute('allow','fullscreen');document.getElementById('pframe').appendChild(f);PR.frame=f;clearTimeout(PR.timer);PR.timer=setTimeout(()=>{if(!PR.ready){const fb=document.getElementById('pfallback');if(fb)fb.hidden=false}},9000)}
+function showSlide(i){i=Math.max(0,Math.min(SL.length-1,i));PR.i=i;document.querySelectorAll('#present .ps').forEach((x,k)=>x.classList.toggle('on',k===i));const demo=SL[i]==='demo',ctl=document.querySelector('#present .pctl'),ex=document.querySelector('#present .pexit');if(ctl)ctl.style.display=demo?'none':'flex';if(ex)ex.style.display=demo?'none':'block';try{history.replaceState(null,'','#rivolt')}catch(e){}}
+function sceneGo(v){PR.scene=+v;document.querySelectorAll('#present .prail [data-pact="scene"]').forEach(b=>b.classList.toggle('on',+b.dataset.v===PR.scene));try{PR.frame.contentWindow.postMessage({mia:'demo',cmd:'scene',v:+v},'*')}catch(e){}}
+function presentClose(){const el=document.getElementById('present');el.classList.remove('open');document.getElementById('pconfirm').classList.remove('open');document.body.style.overflow='';try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}S.view='meeting';render()}
+async function fullScreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){toast("Full screen is blocked here. Use the browser's own full screen: F11 on Windows, Ctrl+Cmd+F on a Mac.")}}
+function openViewer(path,title){document.getElementById('vtitle').textContent=title||'Demo';document.getElementById('vframe').src=path;document.getElementById('vfull').href=path;document.getElementById('viewer').classList.add('open');document.body.style.overflow='hidden';closeAll()}
+function closeViewer(){document.getElementById('viewer').classList.remove('open');document.getElementById('vframe').src='about:blank';document.body.style.overflow=''}
+window.addEventListener('message',e=>{const d=e.data||{};if(d.mia==='demo-ready'&&PR.frame&&e.source===PR.frame.contentWindow){PR.ready=true;const fb=document.getElementById('pfallback');if(fb)fb.hidden=true}});
+document.getElementById('present').addEventListener('click',e=>{const b=e.target.closest('[data-pact]');if(!b)return;const a=b.dataset.pact;
+ if(a==='next')showSlide(PR.i+1);else if(a==='prev')showSlide(PR.i-1);else if(a==='fs')fullScreen();
+ else if(a==='hole'){showSlide(SL.indexOf('demo'));setTimeout(()=>sceneGo(b.dataset.v),PR.ready?60:1200)}
+ else if(a==='scene')sceneGo(b.dataset.v);
+ else if(a==='plan'){S.meet.plan=b.dataset.v;save();renderTerms()}
+ else if(a==='exit')document.getElementById('pconfirm').classList.add('open');else if(a==='stay')document.getElementById('pconfirm').classList.remove('open');else if(a==='leave')presentClose()});
+document.addEventListener('keydown',e=>{const pr=document.getElementById('present');if(!pr.classList.contains('open')){if(e.key==='Escape'&&document.getElementById('viewer').classList.contains('open'))closeViewer();return}
+ if(e.target.closest&&e.target.closest('input,textarea,select'))return;const k=e.key;
+ if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();showSlide(PR.i+1)}else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();showSlide(PR.i-1)}
+ else if(k==='f'||k==='F')fullScreen();else if(k==='p'||k==='P'){S.meet.showPrices=!S.meet.showPrices;save();renderTerms()}
+ else if(k==='Escape'){if(!document.fullscreenElement)document.getElementById('pconfirm').classList.toggle('open')}
+ else if(/^[1-9]$/.test(k)&&SL[PR.i]==='demo')sceneGo(+k-1);
+ e.stopPropagation()},true);
+
+
+/* standalone: demo lives at ../demo/ on the same site, so the presentation can drive it directly */
+function directScene(v){try{const d=PR.frame.contentDocument;const q=x=>d.querySelector(x);if(!q('[data-a="scene"]')){const lg=q('[data-a="login"][data-v="partner"]');if(lg)lg.click();const g=q('#guideBtn')||q('[data-a="guide"]');if(g)g.click()}const b=q('[data-a="scene"][data-v="'+v+'"]');if(b)b.click();setTimeout(()=>{const s=q('[data-a="scene"]');if(s&&s.offsetParent!==null){const gb=q('#guideBtn');if(gb)gb.click()}},80)}catch(e){}}
+const _sceneGo=sceneGo;sceneGo=function(v){_sceneGo(v);directScene(+v)};
+function ensureFrameStandalone(){if(PR.frame)return;const f=document.createElement('iframe');f.src='../demo/';f.title='Rivolt Practice demonstration';f.setAttribute('allow','fullscreen');f.addEventListener('load',()=>{try{if(f.contentDocument.querySelector('[data-a]')){PR.ready=true;const fb=document.getElementById('pfallback');if(fb)fb.hidden=true}}catch(e){}});document.getElementById('pframe').appendChild(f);PR.frame=f;PR.timer=setTimeout(()=>{if(!PR.ready){const fb=document.getElementById('pfallback');if(fb)fb.hidden=false}},9000)}
+ensureFrame=ensureFrameStandalone;
+const pr=document.getElementById('present');pr.innerHTML=slidesHTML();PR.built=true;
+const fb=pr.querySelector('#pfallback a[href="demos/rivolt/index.html"]');if(fb)fb.setAttribute('href','../demo/');
+renderTerms();ensureFrame();showSlide(0);
+}
+</script>
+</body>
+</html>

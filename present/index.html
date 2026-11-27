@@ -167,7 +167,7 @@ function slidesHTML(){return `
   <div class="pfoot"><span>Moshe Israel Ashtamkar · MIA Technology</span><span>M.I.A Technology and Financial Solutions Limited · Lusaka</span></div></section>
  <button class="pexit" data-pact="exit" aria-label="Leave the presentation">×</button>
  <div class="pctl"><button data-pact="prev" aria-label="Previous">‹</button><button data-pact="next" aria-label="Next">›</button><button data-pact="fs" aria-label="Full screen">⤢</button></div>
- <div id="pconfirm"><div><b>Leave the presentation?</b><span>The internal HQ screens will show next.</span><div class="row"><button class="y" data-pact="leave">Leave</button><button data-pact="stay">Stay</button></div></div></div>`}
+ <div id="pconfirm"><div><b>Leave the presentation?</b><span>The demonstration opens next.</span><div class="row"><button class="y" data-pact="leave">Leave</button><button data-pact="stay">Stay</button></div></div></div>`}
 function presentOpen(i){const el=document.getElementById('present');if(!PR.built){el.innerHTML=slidesHTML();PR.built=true}renderTerms();el.classList.add('open');document.body.style.overflow='hidden';closeAll();ensureFrame();showSlide(i||0)}
 function ensureFrame(){if(PR.frame)return;const f=document.createElement('iframe');f.src='demos/rivolt/index.html';f.title='Rivolt Practice demonstration';f.setAttribute('allow','fullscreen');document.getElementById('pframe').appendChild(f);PR.frame=f;clearTimeout(PR.timer);PR.timer=setTimeout(()=>{if(!PR.ready){const fb=document.getElementById('pfallback');if(fb)fb.hidden=false}},9000)}
 function showSlide(i){i=Math.max(0,Math.min(SL.length-1,i));PR.i=i;document.querySelectorAll('#present .ps').forEach((x,k)=>x.classList.toggle('on',k===i));const demo=SL[i]==='demo',ctl=document.querySelector('#present .pctl'),ex=document.querySelector('#present .pexit');if(ctl)ctl.style.display=demo?'none':'flex';if(ex)ex.style.display=demo?'none':'block';try{history.replaceState(null,'','#rivolt')}catch(e){}}
@@ -197,6 +197,7 @@ function directScene(v){try{const d=PR.frame.contentDocument;const q=x=>d.queryS
 const _sceneGo=sceneGo;sceneGo=function(v){_sceneGo(v);directScene(+v)};
 function ensureFrameStandalone(){if(PR.frame)return;const f=document.createElement('iframe');f.src='../demo/';f.title='Rivolt Practice demonstration';f.setAttribute('allow','fullscreen');f.addEventListener('load',()=>{try{if(f.contentDocument.querySelector('[data-a]')){PR.ready=true;const fb=document.getElementById('pfallback');if(fb)fb.hidden=true}}catch(e){}});document.getElementById('pframe').appendChild(f);PR.frame=f;PR.timer=setTimeout(()=>{if(!PR.ready){const fb=document.getElementById('pfallback');if(fb)fb.hidden=false}},9000)}
 ensureFrame=ensureFrameStandalone;
+presentClose=function(){location.href='../demo/'};
 const pr=document.getElementById('present');pr.innerHTML=slidesHTML();PR.built=true;
 const fb=pr.querySelector('#pfallback a[href="demos/rivolt/index.html"]');if(fb)fb.setAttribute('href','../demo/');
 renderTerms();ensureFrame();showSlide(0);
